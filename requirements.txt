@@ -1,7 +1,10 @@
 Flask
 flask-cors
-openai
-whisper
+openai==1.2.4
+httpx>=0.27.0
+
+git+https://github.com/openai/whisper.git
+
 pydub
 torch
 torchaudio

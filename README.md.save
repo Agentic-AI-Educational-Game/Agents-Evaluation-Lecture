@@ -1,0 +1,22 @@
+# 🎙️ Évaluation de la Lecture
+
+Cette application permet d'évaluer la lecture d'un enfant à partir d'un enregistrement audio et d'un texte attendu. Elle mesure la précision, la vitesse, la fluidité, et fournit un retour motivant basé sur l'IA.
+
+---
+
+## 🚀 Étapes d'utilisation
+
+### 1. 🔨 Construction de l'image Docker
+
+```bash
+docker build -t readeval-app 'un enregistrement audio et d'un texte attendu. Elle mesure la précision, la vitesse, la fluidité, et fournit un retour motivant basé sur l'IA.
+h
+docker build -t readeval-app .
+valuation de la Lecture
+
+### 3. L'application sera accessible via :
+
+```bash
+http://localhost:5000/evaluate
+```
+
