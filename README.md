@@ -39,6 +39,7 @@ docker run -p 5000:5000 readeval-app
   "transcript": "Texte transcrit à partir de l’audio"
 }
 ```
+![image](https://github.com/user-attachments/assets/370737c2-b752-4b0d-a8fa-b5593190868e)
 
 ---
 
