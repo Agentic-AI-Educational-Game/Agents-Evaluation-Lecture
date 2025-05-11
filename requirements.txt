@@ -1,0 +1,9 @@
+Flask
+flask-cors
+openai
+whisper
+pydub
+torch
+torchaudio
+librosa
+python-Levenshtein
