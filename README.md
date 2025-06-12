@@ -11,12 +11,18 @@ Une API Flask pour évaluer la qualité de la lecture orale chez les enfants, av
 ```bash
 docker build -t readeval-app .
 ```
+### 2. pull Image
+```bash
+docker pull salahjb/readeval-app
+```
 
 ### ▶️ 2. Exécution du conteneur
 
 ```bash
 docker run -p 5000:5000 readeval-app
 ```
+
+
 
 ---
 
