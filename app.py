@@ -10,6 +10,7 @@ import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from bson import ObjectId
+import time
 import json
 
 app = Flask(__name__)
@@ -18,6 +19,8 @@ CORS(app)
 # MongoDB Configuration
 MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017/')
 DATABASE_NAME = os.getenv('DATABASE_NAME', 'speech_evaluation')
+# DATABASE_NAME = os.getenv('DATABASE_NAME', 'db_questions')
+
 COLLECTION_NAME = os.getenv('COLLECTION_NAME', 'evaluations')
 
 # Initialize MongoDB client
@@ -68,11 +71,11 @@ def evaluate():
         # Calculate score
         score_val = (accuracy / 100 + wpm / 100 + (
             1 if fluency == 'excellent' else 0.8 if fluency == 'good' else 0.5)) / 3
-        score = round(score_val * 5, 1)
+        score = round(score_val * 5, 1) * 2
 
         # Prepare response data
         response_data = {
-            "accuracy": f"{accuracy}%",
+            "accuracy": f"{accuracy}%   ",
             "speed": f"{wpm} WPM",
             "fluency": fluency,
             "pron_feedback": pron_feedback,
@@ -82,7 +85,7 @@ def evaluate():
 
         # Prepare document for MongoDB
         document = {
-            "timestamp": datetime.utcnow(),
+            "timestamp": time.time(),
             "expected_text": expected_text,
             "transcript": transcript,
             "accuracy": accuracy,
