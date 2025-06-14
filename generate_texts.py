@@ -1,11 +1,27 @@
 import httpx
 import os
+import time
 from flask import Flask, jsonify
+from flask_cors import CORS
+from pymongo import MongoClient
 
 app = Flask(__name__)
+CORS(app)
 
+# 🧠 GROQ API KEY
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "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")
 
+# 🗂️ MongoDB Configuration
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+DATABASE_NAME = os.getenv("DATABASE_NAME", "speech_evaluation")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME_TEXTS", "texts_llm")
+
+client = MongoClient(MONGO_URI)
+db = client[DATABASE_NAME]
+texts_collection = db[COLLECTION_NAME]
+
+
+# 📚 Génération du texte enfantin
 def generate_simple_text():
     prompt = """
     Tu es un assistant éducatif dans un jeu de lecture pour enfants de 6 à 9 ans.
@@ -36,18 +52,31 @@ def generate_simple_text():
 
     content = response.json()["choices"][0]["message"]["content"]
 
-    # Nettoyage simple du texte
+    # Nettoyage
     text = content.replace("Texte:", "").replace("\n", " ").strip()
 
-    return {"text": text}
+    return text
 
+
+# 🎯 Endpoint de génération + stockage
 @app.route("/generate_llm_text", methods=["GET"])
 def generate_text():
     try:
-        result = generate_simple_text()
-        return jsonify(result)
+        generated_text = generate_simple_text()
+
+        # Stockage dans MongoDB
+        doc = {
+            "text": generated_text,
+            "timestamp": time.time()
+        }
+        result = texts_collection.insert_one(doc)
+
+        return jsonify({"text": generated_text, "id": str(result.inserted_id)})
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+# 🚀 Run
 if __name__ == "__main__":
     app.run(debug=True, port=5002)
