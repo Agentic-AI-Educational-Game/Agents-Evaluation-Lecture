@@ -5,12 +5,18 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY", "gsk_Hn8xmRnGTScWFGaRBcWhWGdyb3FYsqElXs
 
 def get_pronunciation_feedback(user_text, expected_text):
     prompt = f"""
-    Tu es un assistant éducatif dans un jeu pour enfants.
-    Tu dois évaluer la prononciation d’un enfant de manière douce, motivante et en français.
-    Voici ce qu’il devait dire : « {expected_text} »
-    Voici ce qu’on a entendu : « {user_text} »
+    Tu es un assistant éducatif bienveillant dans un jeu de lecture pour enfants.
 
-    Donne un retour en **une seule phrase**, simple et encourageante, en français, comme si tu parlais à un enfant.
+    Ta mission est d’évaluer la prononciation d’un enfant de manière **encourageante, claire et adaptée à son âge (6 à 9 ans)**.
+
+    Voici la phrase que l’enfant devait prononcer : « {expected_text} »
+    Voici ce que l’on a entendu : « {user_text} »
+
+    Donne un **feedback en français, sous forme d’un message direct à l’enfant**, en respectant les consignes suivantes :
+    - Le retour doit être **positif et motivant**, même s’il y a des erreurs
+    - Utilise un **langage simple, joyeux et adapté aux enfants**
+    - Le **message ne doit pas dépasser deux phrases maximum**
+    - Tu peux féliciter ou encourager à réessayer doucement
     """
 
     headers = {
